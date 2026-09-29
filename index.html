@@ -1,0 +1,1973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BOBA RUSH 🧋</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background:
+        radial-gradient(circle at top left, #442064, transparent 35%),
+        radial-gradient(circle at bottom right, #18295d, transparent 35%),
+        #0d0b18;
+    color: white;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* START SCREEN */
+
+#startScreen {
+    position: fixed;
+    inset: 0;
+    background: #0d0b18;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 20px;
+}
+
+.startBox {
+    width: min(500px, 95%);
+    text-align: center;
+    padding: 45px 25px;
+    border-radius: 30px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 25px 80px rgba(0,0,0,.45);
+    backdrop-filter: blur(15px);
+}
+
+.logo {
+    font-size: 70px;
+    margin-bottom: 10px;
+    animation: bounce 1.5s infinite;
+}
+
+@keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.startBox h1 {
+    font-size: clamp(42px, 10vw, 70px);
+    letter-spacing: 4px;
+    margin-bottom: 8px;
+}
+
+.startBox h1 span {
+    color: #dca8ff;
+}
+
+.startBox p {
+    color: #aaa5b9;
+    margin-bottom: 30px;
+}
+
+.startBtn {
+    background: linear-gradient(135deg, #a85cff, #6e35ff);
+    color: white;
+    padding: 17px 38px;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 0 10px 30px rgba(138, 71, 255, .35);
+    transition: .2s;
+}
+
+.startBtn:hover {
+    transform: scale(1.05);
+}
+
+/* GAME */
+
+.game {
+    width: min(1100px, 94%);
+    margin: auto;
+    padding: 25px 0 40px;
+}
+
+/* HEADER */
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+}
+
+.title {
+    font-size: 27px;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+.title span {
+    color: #d18cff;
+}
+
+.musicBtn {
+    background: rgba(255,255,255,.08);
+    color: white;
+    border: 1px solid rgba(255,255,255,.1);
+    padding: 10px 15px;
+    border-radius: 12px;
+}
+
+/* STATS */
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.stat {
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.08);
+    padding: 15px;
+    border-radius: 17px;
+}
+
+.stat small {
+    color: #9993aa;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.stat strong {
+    font-size: 22px;
+}
+
+/* ORDER */
+
+.order {
+    background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 24px;
+    padding: 22px;
+    margin-bottom: 20px;
+}
+
+.orderTop {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.customer {
+    color: #aaa5b9;
+    font-size: 14px;
+}
+
+.drinkName {
+    font-size: clamp(22px, 5vw, 34px);
+    font-weight: 900;
+    margin-top: 4px;
+}
+
+.timerText {
+    font-weight: bold;
+    color: #dca8ff;
+}
+
+.timerBar {
+    height: 8px;
+    background: #24202d;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.timerFill {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, #d68cff, #7b4dff);
+    transition: width .1s linear;
+}
+
+.recipe {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 15px;
+}
+
+.recipe span {
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: #211d2b;
+    color: #d9d2e4;
+    font-size: 13px;
+}
+
+.recipe span.done {
+    background: #673fa1;
+    color: white;
+}
+
+/* COUNTER */
+
+.counter {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.card {
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 24px;
+    padding: 25px;
+}
+
+.cardTitle {
+    font-size: 14px;
+    color: #aaa5b9;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+/* CUP */
+
+.cupArea {
+    min-height: 360px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cup {
+    position: relative;
+    width: 150px;
+    height: 220px;
+    border: 4px solid rgba(255,255,255,.7);
+    border-top: none;
+    border-radius: 10px 10px 35px 35px;
+    overflow: hidden;
+    background: rgba(255,255,255,.05);
+}
+
+.cup::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -8px;
+    width: 158px;
+    height: 15px;
+    border: 4px solid white;
+    border-radius: 20px;
+    z-index: 5;
+}
+
+.straw {
+    position: absolute;
+    width: 12px;
+    height: 75px;
+    background: #f1a4ff;
+    top: -60px;
+    right: 30px;
+    transform: rotate(8deg);
+    border-radius: 10px;
+    z-index: 6;
+}
+
+.liquid {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0%;
+    background: linear-gradient(
+        to top,
+        #5d347c,
+        #c878d8
+    );
+    transition: height .3s, background .3s;
+}
+
+.boba {
+    position: absolute;
+    bottom: 10px;
+    left: 20px;
+    right: 20px;
+    height: 50px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 3;
+}
+
+.boba i {
+    width: 15px;
+    height: 15px;
+    background: #241527;
+    border-radius: 50%;
+    box-shadow: inset -2px -2px 3px rgba(255,255,255,.15);
+}
+
+/* INGREDIENTS */
+
+.ingredients {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+}
+
+.ingredient {
+    background: #191622;
+    color: white;
+    padding: 14px 5px;
+    border-radius: 15px;
+    border: 1px solid rgba(255,255,255,.08);
+    transition: .15s;
+    min-height: 75px;
+}
+
+.ingredient:hover {
+    transform: translateY(-3px);
+    background: #282033;
+}
+
+.ingredient:active {
+    transform: scale(.94);
+}
+
+.ingredient .emoji {
+    display: block;
+    font-size: 25px;
+    margin-bottom: 4px;
+}
+
+.ingredient small {
+    font-size: 10px;
+    color: #aaa5b9;
+}
+
+/* CURRENT ORDER */
+
+.current {
+    min-height: 55px;
+    background: #15121f;
+    border-radius: 15px;
+    margin-top: 15px;
+    padding: 14px;
+    color: #c9c1d5;
+    font-size: 14px;
+}
+
+.current strong {
+    color: white;
+}
+
+/* CONTROLS */
+
+.controls {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.controlBtn {
+    flex: 1;
+    padding: 14px;
+    border-radius: 13px;
+    font-weight: bold;
+    color: white;
+}
+
+.clearBtn {
+    background: #292330;
+}
+
+.serveBtn {
+    background: linear-gradient(135deg, #a85cff, #6739db);
+}
+
+/* GAME OVER */
+
+#gameOver {
+    position: fixed;
+    inset: 0;
+    background: rgba(7,5,12,.88);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 90;
+    padding: 20px;
+}
+
+.gameOverBox {
+    width: min(430px, 95%);
+    text-align: center;
+    padding: 40px 25px;
+    background: #171321;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 25px;
+}
+
+.gameOverBox h2 {
+    font-size: 38px;
+    margin-bottom: 10px;
+}
+
+.finalScore {
+    font-size: 55px;
+    font-weight: 900;
+    color: #d18cff;
+    margin: 15px;
+}
+
+.restartBtn {
+    background: #8b50ed;
+    color: white;
+    padding: 14px 30px;
+    border-radius: 30px;
+    font-weight: bold;
+}
+
+/* POPUPS */
+
+.popup {
+    position: fixed;
+    left: 50%;
+    top: 20%;
+    transform: translate(-50%, -50%) scale(.8);
+    opacity: 0;
+    pointer-events: none;
+    padding: 12px 20px;
+    background: #fff;
+    color: #16111e;
+    border-radius: 30px;
+    font-weight: 900;
+    z-index: 200;
+}
+
+.popup.show {
+    animation: popup .8s ease;
+}
+
+@keyframes popup {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(.7);
+    }
+    20% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    80% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 750px) {
+
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .counter {
+        grid-template-columns: 1fr;
+    }
+
+    .ingredients {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .cupArea {
+        min-height: 300px;
+    }
+}
+
+@media(max-width: 450px) {
+
+    .game {
+        width: 92%;
+    }
+
+    .ingredients {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .orderTop {
+        align-items: flex-start;
+    }
+
+    .cup {
+        transform: scale(.9);
+    }
+}
+</style>
+</head>
+
+<body>
+
+  <audio
+    id="bgMusic"
+    src="cute-music.mp3"
+    loop
+    preload="auto">
+</audio>
+
+
+<!-- START SCREEN -->
+
+<div id="startScreen">
+
+    <div class="startBox">
+
+        <div class="logo">🧋</div>
+
+        <h1>BOBA <span>RUSH</span></h1>
+
+        <p>
+            Make the right drinks before your customers lose patience.
+        </p>
+
+        <button class="startBtn" onclick="startGame()">
+            START SHIFT
+        </button>
+
+        <p style="font-size:12px;margin-top:18px;margin-bottom:0;">
+            🎵 Cute music starts automatically
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- GAME OVER -->
+
+<div id="gameOver" class="hidden">
+
+    <div class="gameOverBox">
+
+        <div style="font-size:55px;">🧋</div>
+
+        <h2>SHIFT OVER</h2>
+
+        <p style="color:#aaa5b9;">
+            The customers have left...
+        </p>
+
+        <div class="finalScore" id="finalScore">
+            0
+        </div>
+
+        <p id="finalMessage" style="margin-bottom:20px;">
+            Not bad!
+        </p>
+
+        <button class="restartBtn" onclick="restartGame()">
+            PLAY AGAIN
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- POPUP -->
+
+<div id="popup" class="popup">
+    NICE!
+</div>
+
+
+<!-- GAME -->
+
+<div class="game">
+
+    <header>
+
+        <div class="title">
+            🧋 BOBA <span>RUSH</span>
+        </div>
+
+        <button class="musicBtn" id="musicBtn" onclick="toggleMusic()">
+            🎵 Music: ON
+        </button>
+
+    </header>
+
+
+    <!-- STATS -->
+
+    <div class="stats">
+
+        <div class="stat">
+            <small>SCORE</small>
+            <strong id="score">0</strong>
+        </div>
+
+        <div class="stat">
+            <small>COINS</small>
+            <strong id="coins">0</strong>
+        </div>
+
+        <div class="stat">
+            <small>COMBO</small>
+            <strong id="combo">x0</strong>
+        </div>
+
+        <div class="stat">
+            <small>LEVEL</small>
+            <strong id="level">1</strong>
+        </div>
+
+    </div>
+
+
+    <!-- ORDER -->
+
+    <div class="order">
+
+        <div class="orderTop">
+
+            <div>
+
+                <div class="customer">
+                    CUSTOMER #<span id="customerNumber">1</span>
+                </div>
+
+                <div class="drinkName" id="drinkName">
+                    CLASSIC MILK TEA
+                </div>
+
+            </div>
+
+            <div class="timerText">
+                ⏱ <span id="timer">16</span>s
+            </div>
+
+        </div>
+
+        <div class="timerBar">
+            <div class="timerFill" id="timerFill"></div>
+        </div>
+
+        <div class="recipe" id="recipe"></div>
+
+    </div>
+
+
+    <!-- COUNTER -->
+
+    <div class="counter">
+
+        <!-- CUP -->
+
+        <div class="card">
+
+            <div class="cardTitle">
+                Your Drink
+            </div>
+
+            <div class="cupArea">
+
+                <div class="cup">
+
+                    <div class="straw"></div>
+
+                    <div class="liquid" id="liquid"></div>
+
+                    <div class="boba" id="boba"></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- INGREDIENTS -->
+
+        <div class="card">
+
+            <div class="cardTitle">
+                Ingredients
+            </div>
+
+            <div class="ingredients" id="ingredients"></div>
+
+            <div class="current">
+
+                Current order:
+                <strong id="currentOrder">
+                    Empty
+                </strong>
+
+            </div>
+
+            <div class="controls">
+
+                <button
+                    class="controlBtn clearBtn"
+                    onclick="clearDrink()"
+                >
+                    CLEAR
+                </button>
+
+                <button
+                    class="controlBtn serveBtn"
+                    onclick="serveDrink()"
+                >
+                    SERVE 🧋
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================
+   GAME DATA
+========================================= */
+
+const ingredients = {
+
+    tea: {
+        name: "Tea",
+        emoji: "🍵"
+    },
+
+    milk: {
+        name: "Milk",
+        emoji: "🥛"
+    },
+
+    matcha: {
+        name: "Matcha",
+        emoji: "🍃"
+    },
+
+    taro: {
+        name: "Taro",
+        emoji: "🍠"
+    },
+
+    strawberry: {
+        name: "Strawberry",
+        emoji: "🍓"
+    },
+
+    mango: {
+        name: "Mango",
+        emoji: "🥭"
+    },
+
+    coconut: {
+        name: "Coconut",
+        emoji: "🥥"
+    },
+
+    chocolate: {
+        name: "Chocolate",
+        emoji: "🍫"
+    },
+
+    blueberry: {
+        name: "Blueberry",
+        emoji: "🫐"
+    },
+
+    peach: {
+        name: "Peach",
+        emoji: "🍑"
+    },
+
+    lemon: {
+        name: "Lemon",
+        emoji: "🍋"
+    },
+
+    banana: {
+        name: "Banana",
+        emoji: "🍌"
+    },
+
+    honey: {
+        name: "Honey",
+        emoji: "🍯"
+    },
+
+    brownSugar: {
+        name: "Brown Sugar",
+        emoji: "🟤"
+    },
+
+    tapioca: {
+        name: "Boba",
+        emoji: "⚫"
+    },
+
+    jelly: {
+        name: "Jelly",
+        emoji: "🟣"
+    },
+
+    ice: {
+        name: "Ice",
+        emoji: "🧊"
+    },
+
+    sugar: {
+        name: "Sugar",
+        emoji: "🍬"
+    },
+
+    cream: {
+        name: "Cream",
+        emoji: "🍦"
+    }
+
+};
+
+
+const drinks = [
+
+    {
+        name: "CLASSIC MILK TEA",
+        recipe: ["tea","milk","sugar","ice","tapioca"],
+        color: "linear-gradient(to top,#5d347c,#c878d8)"
+    },
+
+    {
+        name: "STRAWBERRY MILK",
+        recipe: ["strawberry","milk","sugar","ice"],
+        color: "linear-gradient(to top,#c74772,#ff9db7)"
+    },
+
+    {
+        name: "MATCHA BOBA",
+        recipe: ["matcha","milk","sugar","ice","tapioca"],
+        color: "linear-gradient(to top,#557d43,#a7d66c)"
+    },
+
+    {
+        name: "TARO MILK TEA",
+        recipe: ["taro","milk","sugar","ice","tapioca"],
+        color: "linear-gradient(to top,#76509a,#d49ee8)"
+    },
+
+    {
+        name: "MANGO BOBA",
+        recipe: ["mango","milk","sugar","ice","tapioca"],
+        color: "linear-gradient(to top,#e89021,#ffd45c)"
+    },
+
+    {
+        name: "COCONUT MILK TEA",
+        recipe: ["coconut","milk","sugar","ice","tapioca"],
+        color: "linear-gradient(to top,#a87956,#f5dfc1)"
+    },
+
+    {
+        name: "CHOCOLATE BOBA",
+        recipe: ["chocolate","milk","sugar","ice","tapioca"],
+        color: "linear-gradient(to top,#442317,#9b6249)"
+    },
+
+    {
+        name: "BLUEBERRY MILK",
+        recipe: ["blueberry","milk","sugar","ice"],
+        color: "linear-gradient(to top,#394c9e,#a5b7ff)"
+    },
+
+    {
+        name: "HONEY MILK TEA",
+        recipe: ["tea","milk","honey","ice","tapioca"],
+        color: "linear-gradient(to top,#9b641d,#f5c85c)"
+    },
+
+    {
+        name: "PEACH TEA",
+        recipe: ["peach","tea","sugar","ice"],
+        color: "linear-gradient(to top,#d66c4b,#ffc19d)"
+    },
+
+    {
+        name: "LEMON TEA",
+        recipe: ["lemon","tea","sugar","ice"],
+        color: "linear-gradient(to top,#9ba62b,#f1ef70)"
+    },
+
+    {
+        name: "BANANA BOBA",
+        recipe: ["banana","milk","sugar","ice","tapioca"],
+        color: "linear-gradient(to top,#b99828,#fff09a)"
+    },
+
+    {
+        name: "MANGO CREAM",
+        recipe: ["mango","milk","cream","ice"],
+        color: "linear-gradient(to top,#d98220,#ffe0a0)"
+    },
+
+    {
+        name: "CHOCOLATE CREAM",
+        recipe: ["chocolate","milk","cream","ice","tapioca"],
+        color: "linear-gradient(to top,#3a2019,#c18b6d)"
+    },
+
+    {
+        name: "BROWN SUGAR BOBA",
+        recipe: ["brownSugar","milk","ice","tapioca"],
+        color: "linear-gradient(to top,#5a321e,#d49a63)"
+    },
+
+    {
+        name: "MANGO STRAWBERRY",
+        recipe: ["mango","strawberry","sugar","ice"],
+        color: "linear-gradient(to top,#d86632,#ffb25e)"
+    }
+
+];
+
+
+/* =========================================
+   GAME VARIABLES
+========================================= */
+
+let score = 0;
+let coins = 0;
+let combo = 0;
+let level = 1;
+
+let currentDrink;
+let playerOrder = [];
+
+let timeLeft = 16;
+let maxTime = 16;
+
+let timerInterval;
+let customerNumber = 1;
+
+let gameRunning = false;
+
+
+/* =========================================
+   MUSIC SYSTEM
+========================================= */
+
+let audioCtx = null;
+let masterGain = null;
+let musicOn = false;
+let musicTimeout = null;
+let noteIndex = 0;
+
+
+/*
+Cute original melody.
+No MP3 required.
+*/
+
+const melody = [
+
+    523.25,
+    659.25,
+    783.99,
+    659.25,
+
+    587.33,
+    659.25,
+    880.00,
+    783.99,
+
+    523.25,
+    659.25,
+    783.99,
+    1046.50,
+
+    880.00,
+    783.99,
+    659.25,
+    587.33
+
+];
+
+
+function setupAudio() {
+
+    if (!audioCtx) {
+
+        audioCtx =
+            new (window.AudioContext ||
+            window.webkitAudioContext)();
+
+        masterGain =
+            audioCtx.createGain();
+
+        masterGain.gain.value = 0.055;
+
+        masterGain.connect(
+            audioCtx.destination
+        );
+
+    }
+
+}
+
+
+function startMusic() {
+
+    setupAudio();
+
+    audioCtx.resume();
+
+    musicOn = true;
+
+    document.getElementById("musicBtn").textContent =
+        "🎵 Music: ON";
+
+    noteIndex = 0;
+
+    playNextNote();
+
+}
+
+
+function playNextNote() {
+
+    if (!musicOn) return;
+
+    const frequency =
+        melody[noteIndex % melody.length];
+
+    noteIndex++;
+
+    const oscillator =
+        audioCtx.createOscillator();
+
+    const gain =
+        audioCtx.createGain();
+
+    oscillator.type = "triangle";
+
+    oscillator.frequency.value =
+        frequency;
+
+    const now =
+        audioCtx.currentTime;
+
+    gain.gain.setValueAtTime(
+        0.0001,
+        now
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+        0.055,
+        now + 0.025
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+        0.0001,
+        now + 0.30
+    );
+
+    oscillator.connect(gain);
+    gain.connect(masterGain);
+
+    oscillator.start(now);
+
+    oscillator.stop(now + 0.32);
+
+    musicTimeout =
+        setTimeout(
+            playNextNote,
+            300
+        );
+
+}
+
+
+function stopMusic() {
+
+    musicOn = false;
+
+    clearTimeout(musicTimeout);
+
+    document.getElementById("musicBtn").textContent =
+        "🎵 Music: OFF";
+
+}
+
+
+function toggleMusic() {
+
+    if (musicOn) {
+
+        stopMusic();
+
+    } else {
+
+        startMusic();
+
+    }
+
+}
+
+const bgMusic = document.getElementById("bgMusic");
+const musicBtn = document.getElementById("musicBtn");
+
+bgMusic.volume = 0.4;
+
+let musicPlaying = false;
+
+function startMusic() {
+
+    bgMusic.currentTime = 0;
+
+    const playPromise = bgMusic.play();
+
+    if (playPromise !== undefined) {
+
+        playPromise
+            .then(() => {
+
+                musicPlaying = true;
+
+                musicBtn.textContent =
+                    "🎵 Music: ON";
+
+            })
+            .catch(error => {
+
+                console.log(
+                    "Music could not start:",
+                    error
+                );
+
+                musicBtn.textContent =
+                    "🔊 CLICK MUSIC";
+
+            });
+
+    }
+
+}
+
+
+function toggleMusic() {
+
+    if (bgMusic.paused) {
+
+        bgMusic.play()
+            .then(() => {
+
+                musicPlaying = true;
+
+                musicBtn.textContent =
+                    "🎵 Music: ON";
+
+            })
+            .catch(() => {
+
+                musicBtn.textContent =
+                    "🔊 CLICK MUSIC";
+
+            });
+
+    } else {
+
+        bgMusic.pause();
+
+        musicPlaying = false;
+
+        musicBtn.textContent =
+            "🔇 Music: OFF";
+
+    }
+
+}
+
+
+function startGame() {
+
+    /*
+       IMPORTANT:
+       This runs directly from the
+       user's START SHIFT click.
+    */
+
+    startMusic();
+
+    document
+        .getElementById("startScreen")
+        .classList.add("hidden");
+
+    gameRunning = true;
+
+    score = 0;
+    coins = 0;
+    combo = 0;
+    level = 1;
+    customerNumber = 1;
+
+    updateStats();
+
+    createIngredientButtons();
+
+    newOrder();
+
+}
+
+
+/* =========================================
+   SOUND EFFECTS
+========================================= */
+
+function playSound(
+    frequency = 500,
+    duration = .12,
+    type = "sine"
+) {
+
+    if (!audioCtx || !musicOn) return;
+
+    const osc =
+        audioCtx.createOscillator();
+
+    const gain =
+        audioCtx.createGain();
+
+    osc.type = type;
+
+    osc.frequency.value =
+        frequency;
+
+    gain.gain.setValueAtTime(
+        0.0001,
+        audioCtx.currentTime
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+        .08,
+        audioCtx.currentTime + .01
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+        .0001,
+        audioCtx.currentTime + duration
+    );
+
+    osc.connect(gain);
+    gain.connect(masterGain);
+
+    osc.start();
+
+    osc.stop(
+        audioCtx.currentTime + duration
+    );
+
+}
+
+
+/* =========================================
+   START GAME
+========================================= */
+
+function startGame() {
+
+    /*
+    IMPORTANT:
+    Music starts directly from the
+    user's button click.
+    */
+
+    startMusic();
+
+    document
+        .getElementById("startScreen")
+        .classList.add("hidden");
+
+    gameRunning = true;
+
+    score = 0;
+    coins = 0;
+    combo = 0;
+    level = 1;
+    customerNumber = 1;
+
+    updateStats();
+
+    createIngredientButtons();
+
+    newOrder();
+
+}
+
+
+/* =========================================
+   INGREDIENT BUTTONS
+========================================= */
+
+function createIngredientButtons() {
+
+    const container =
+        document.getElementById("ingredients");
+
+    container.innerHTML = "";
+
+    Object.entries(ingredients)
+        .forEach(([id, item]) => {
+
+            const button =
+                document.createElement("button");
+
+            button.className =
+                "ingredient";
+
+            button.innerHTML = `
+                <span class="emoji">
+                    ${item.emoji}
+                </span>
+                <small>
+                    ${item.name}
+                </small>
+            `;
+
+            button.onclick = () =>
+                addIngredient(id);
+
+            container.appendChild(button);
+
+        });
+
+}
+
+
+/* =========================================
+   NEW ORDER
+========================================= */
+
+function newOrder() {
+
+    clearInterval(timerInterval);
+
+    playerOrder = [];
+
+    const randomIndex =
+        Math.floor(
+            Math.random() *
+            drinks.length
+        );
+
+    currentDrink =
+        drinks[randomIndex];
+
+    document.getElementById(
+        "drinkName"
+    ).textContent =
+        currentDrink.name;
+
+    document.getElementById(
+        "customerNumber"
+    ).textContent =
+        customerNumber;
+
+    renderRecipe();
+
+    resetCup();
+
+    maxTime =
+        Math.max(
+            8,
+            16 - level
+        );
+
+    timeLeft = maxTime;
+
+    updateTimerUI();
+
+    timerInterval =
+        setInterval(() => {
+
+            if (!gameRunning) return;
+
+            timeLeft -= .1;
+
+            updateTimerUI();
+
+            if (timeLeft <= 0) {
+
+                timeOut();
+
+            }
+
+        }, 100);
+
+}
+
+
+/* =========================================
+   RECIPE DISPLAY
+========================================= */
+
+function renderRecipe() {
+
+    const recipe =
+        document.getElementById("recipe");
+
+    recipe.innerHTML = "";
+
+    currentDrink.recipe
+        .forEach((id, index) => {
+
+            const span =
+                document.createElement("span");
+
+            span.id =
+                "recipe-" + index;
+
+            span.textContent =
+                ingredients[id].emoji +
+                " " +
+                ingredients[id].name;
+
+            recipe.appendChild(span);
+
+        });
+
+}
+
+
+/* =========================================
+   ADD INGREDIENT
+========================================= */
+
+function addIngredient(id) {
+
+    if (!gameRunning) return;
+
+    const nextIndex =
+        playerOrder.length;
+
+    const correctIngredient =
+        currentDrink.recipe[nextIndex];
+
+    if (id !== correctIngredient) {
+
+        combo = 0;
+
+        score =
+            Math.max(
+                0,
+                score - 50
+            );
+
+        updateStats();
+
+        showPopup(
+            "❌ WRONG INGREDIENT"
+        );
+
+        playSound(
+            160,
+            .15,
+            "sawtooth"
+        );
+
+        return;
+
+    }
+
+    playerOrder.push(id);
+
+    document
+        .getElementById(
+            "recipe-" + nextIndex
+        )
+        .classList.add("done");
+
+    updateCup();
+
+    document.getElementById(
+        "currentOrder"
+    ).innerHTML =
+        playerOrder
+            .map(x => ingredients[x].name)
+            .join(" → ");
+
+    playSound(
+        600 + nextIndex * 80,
+        .1,
+        "triangle"
+    );
+
+}
+
+
+/* =========================================
+   SERVE
+========================================= */
+
+function serveDrink() {
+
+    if (!gameRunning) return;
+
+    if (
+        playerOrder.length !==
+        currentDrink.recipe.length
+    ) {
+
+        showPopup(
+            "⚠️ DRINK NOT COMPLETE"
+        );
+
+        playSound(
+            180,
+            .15,
+            "square"
+        );
+
+        return;
+
+    }
+
+    clearInterval(timerInterval);
+
+    combo++;
+
+    const multiplier =
+        Math.min(
+            5,
+            Math.max(1, combo)
+        );
+
+    const earnedScore =
+        100 * multiplier;
+
+    const earnedCoins =
+        10 * multiplier;
+
+    score += earnedScore;
+
+    coins += earnedCoins;
+
+    if (
+        score >=
+        level * 600
+    ) {
+
+        level++;
+
+        showPopup(
+            "🔥 LEVEL UP!"
+        );
+
+        playSound(
+            880,
+            .3,
+            "triangle"
+        );
+
+    } else {
+
+        showPopup(
+            "🧋 PERFECT! +" +
+            earnedScore
+        );
+
+        playSound(
+            900,
+            .2,
+            "triangle"
+        );
+
+    }
+
+    updateStats();
+
+    customerNumber++;
+
+    setTimeout(() => {
+
+        if (gameRunning) {
+
+            newOrder();
+
+        }
+
+    }, 550);
+
+}
+
+
+/* =========================================
+   CLEAR DRINK
+========================================= */
+
+function clearDrink() {
+
+    if (!gameRunning) return;
+
+    playerOrder = [];
+
+    renderRecipe();
+
+    resetCup();
+
+    document.getElementById(
+        "currentOrder"
+    ).textContent =
+        "Empty";
+
+}
+
+
+/* =========================================
+   CUP
+========================================= */
+
+function resetCup() {
+
+    const liquid =
+        document.getElementById("liquid");
+
+    liquid.style.height =
+        "0%";
+
+    liquid.style.background =
+        currentDrink.color;
+
+    document.getElementById(
+        "boba"
+    ).innerHTML = "";
+
+}
+
+
+function updateCup() {
+
+    const percentage =
+        (playerOrder.length /
+        currentDrink.recipe.length)
+        * 100;
+
+    document.getElementById(
+        "liquid"
+    ).style.height =
+        percentage + "%";
+
+    const bobaContainer =
+        document.getElementById("boba");
+
+    bobaContainer.innerHTML = "";
+
+    const bobaCount =
+        playerOrder.filter(
+            x => x === "tapioca"
+        ).length;
+
+    const jellyCount =
+        playerOrder.filter(
+            x => x === "jelly"
+        ).length;
+
+    for (
+        let i = 0;
+        i < bobaCount;
+        i++
+    ) {
+
+        const ball =
+            document.createElement("i");
+
+        bobaContainer.appendChild(
+            ball
+        );
+
+    }
+
+    for (
+        let i = 0;
+        i < jellyCount;
+        i++
+    ) {
+
+        const jelly =
+            document.createElement("i");
+
+        jelly.style.background =
+            "#582d68";
+
+        bobaContainer.appendChild(
+            jelly
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   TIMER
+========================================= */
+
+function updateTimerUI() {
+
+    const timer =
+        document.getElementById("timer");
+
+    const fill =
+        document.getElementById("timerFill");
+
+    timer.textContent =
+        Math.ceil(timeLeft);
+
+    const percentage =
+        Math.max(
+            0,
+            (timeLeft / maxTime) * 100
+        );
+
+    fill.style.width =
+        percentage + "%";
+
+}
+
+
+function timeOut() {
+
+    clearInterval(timerInterval);
+
+    combo = 0;
+
+    showPopup(
+        "⏰ TOO SLOW!"
+    );
+
+    playSound(
+        140,
+        .3,
+        "sawtooth"
+    );
+
+    customerNumber++;
+
+    setTimeout(() => {
+
+        if (gameRunning) {
+
+            newOrder();
+
+        }
+
+    }, 650);
+
+}
+
+
+/* =========================================
+   STATS
+========================================= */
+
+function updateStats() {
+
+    document.getElementById(
+        "score"
+    ).textContent =
+        score;
+
+    document.getElementById(
+        "coins"
+    ).textContent =
+        coins;
+
+    document.getElementById(
+        "combo"
+    ).textContent =
+        "x" + combo;
+
+    document.getElementById(
+        "level"
+    ).textContent =
+        level;
+
+}
+
+
+/* =========================================
+   POPUP
+========================================= */
+
+function showPopup(message) {
+
+    const popup =
+        document.getElementById("popup");
+
+    popup.textContent =
+        message;
+
+    popup.classList.remove("show");
+
+    void popup.offsetWidth;
+
+    popup.classList.add("show");
+
+}
+
+
+/* =========================================
+   GAME OVER
+========================================= */
+
+function endGame() {
+
+    gameRunning = false;
+
+    clearInterval(timerInterval);
+
+    document.getElementById(
+        "finalScore"
+    ).textContent =
+        score;
+
+    let message;
+
+    if (score >= 3000) {
+
+        message =
+            "🏆 BOBA LEGEND";
+
+    } else if (score >= 1800) {
+
+        message =
+            "🔥 BOBA MASTER";
+
+    } else if (score >= 800) {
+
+        message =
+            "🧋 DECENT SHIFT";
+
+    } else {
+
+        message =
+            "😭 THE BOBA SHOP SURVIVED";
+
+    }
+
+    document.getElementById(
+        "finalMessage"
+    ).textContent =
+        message;
+
+    document
+        .getElementById("gameOver")
+        .classList.remove("hidden");
+
+}
+
+
+/* =========================================
+   RESTART
+========================================= */
+
+function restartGame() {
+
+    document
+        .getElementById("gameOver")
+        .classList.add("hidden");
+
+    startGame();
+
+}
+
+
+/* =========================================
+   KEYBOARD SUPPORT
+========================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (!gameRunning) return;
+
+        const keyMap = {
+
+            "1": "tea",
+            "2": "milk",
+            "3": "matcha",
+            "4": "taro",
+            "5": "strawberry",
+            "6": "tapioca",
+            "7": "jelly",
+            "8": "ice",
+            "9": "sugar",
+            "0": "cream"
+
+        };
+
+        if (keyMap[event.key]) {
+
+            addIngredient(
+                keyMap[event.key]
+            );
+
+        }
+
+        if (
+            event.key === "Enter"
+        ) {
+
+            serveDrink();
+
+        }
+
+        if (
+            event.key === "Backspace"
+        ) {
+
+            clearDrink();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
